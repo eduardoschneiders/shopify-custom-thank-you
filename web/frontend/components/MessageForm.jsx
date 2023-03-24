@@ -124,6 +124,7 @@ export function MessageForm({ Message: InitialMessage }) {
                   label="Message"
                   labelHidden
                   helpText="Create a beautiful message"
+                  multiline={4}
                 />
               </Card>
             </FormLayout>
