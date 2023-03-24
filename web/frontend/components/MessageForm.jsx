@@ -82,8 +82,19 @@ export function MessageForm({ Message: InitialMessage }) {
     onSubmit,
   });
 
-  const isDeleting = false;
-  const deleteMessage = () => console.log("delete");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const deleteMessage = useCallback(async () => {
+    reset();
+    setIsDeleting(true);
+    const response = await fetch(`/api/messages/${Message.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    if (response.ok) {
+      navigate(`/`);
+    }
+  }, [Message]);
 
   return (
     <Stack vertical>

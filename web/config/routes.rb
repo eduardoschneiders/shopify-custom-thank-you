@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   get "/api/messages/:id", to: "messages#show"
   patch "/api/messages/:id", to: "messages#update"
+  delete "/api/messages/:id", to: "messages#delete"
 
   get "/api/products/count", to: "products#count"
   get "/api/products/create", to: "products#create"
