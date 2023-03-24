@@ -16246,7 +16246,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   });
 
   // extensions/custom-thank-you-ext/src/index.jsx
-  var import_react15 = __toESM(require_react());
+  var import_react12 = __toESM(require_react());
 
   // node_modules/@shopify/post-purchase-ui-extensions/node_modules/@remote-ui/core/build/esm/component.mjs
   function createRemoteComponent(componentType) {
@@ -16256,12 +16256,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // node_modules/@shopify/post-purchase-ui-extensions/build/esm/components/BlockStack/BlockStack.mjs
   var BlockStack = createRemoteComponent("BlockStack");
 
-  // node_modules/@shopify/post-purchase-ui-extensions/build/esm/components/Button/Button.mjs
-  var Button = createRemoteComponent("Button");
-
-  // node_modules/@shopify/post-purchase-ui-extensions/build/esm/components/CalloutBanner/CalloutBanner.mjs
-  var CalloutBanner = createRemoteComponent("CalloutBanner");
-
   // node_modules/@shopify/post-purchase-ui-extensions/build/esm/components/Heading/Heading.mjs
   var Heading = createRemoteComponent("Heading");
 
@@ -16270,9 +16264,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // node_modules/@shopify/post-purchase-ui-extensions/build/esm/components/Layout/Layout.mjs
   var Layout = createRemoteComponent("Layout");
-
-  // node_modules/@shopify/post-purchase-ui-extensions/build/esm/components/TextBlock/TextBlock.mjs
-  var TextBlock = createRemoteComponent("TextBlock");
 
   // node_modules/@shopify/post-purchase-ui-extensions/build/esm/components/TextContainer/TextContainer.mjs
   var TextContainer = createRemoteComponent("TextContainer");
@@ -16522,12 +16513,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/components/BlockStack/BlockStack.mjs
   var BlockStack2 = createRemoteReactComponent(BlockStack);
 
-  // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/components/Button/Button.mjs
-  var Button2 = createRemoteReactComponent(Button);
-
-  // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/components/CalloutBanner/CalloutBanner.mjs
-  var CalloutBanner2 = createRemoteReactComponent(CalloutBanner);
-
   // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/components/Heading/Heading.mjs
   var Heading2 = createRemoteReactComponent(Heading);
 
@@ -16537,9 +16522,6 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/components/Layout/Layout.mjs
   var Layout2 = createRemoteReactComponent(Layout);
 
-  // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/components/TextBlock/TextBlock.mjs
-  var TextBlock2 = createRemoteReactComponent(TextBlock);
-
   // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/components/TextContainer/TextContainer.mjs
   var TextContainer2 = createRemoteReactComponent(TextContainer);
 
@@ -16547,8 +16529,8 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   var View2 = createRemoteReactComponent(View);
 
   // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/context.mjs
-  var import_react13 = __toESM(require_react(), 1);
-  var ExtensionInputContext = /* @__PURE__ */ (0, import_react13.createContext)(null);
+  var import_react10 = __toESM(require_react(), 1);
+  var ExtensionInputContext = /* @__PURE__ */ (0, import_react10.createContext)(null);
 
   // node_modules/@shopify/post-purchase-ui-extensions-react/build/esm/render.mjs
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
@@ -16566,59 +16548,41 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
 
   // extensions/custom-thank-you-ext/src/index.jsx
   var import_jsx_runtime4 = __toESM(require_jsx_runtime());
-  extend("Checkout::PostPurchase::ShouldRender", (_0) => __async(void 0, [_0], function* ({ storage }) {
-    const initialState = yield getRenderData();
-    const render3 = true;
-    if (render3) {
-      yield storage.update(initialState);
-    }
-    return {
-      render: render3
-    };
-  }));
-  function getRenderData() {
+  function createUrl(endpoint) {
+    const embeddedAppHost = "https://e6b3-2804-4b0-1198-a900-8994-8510-805b-8302.ngrok.io";
+    return `${embeddedAppHost}/${endpoint}`;
+  }
+  function getMessage() {
     return __async(this, null, function* () {
-      return {
-        couldBe: "anything"
-      };
+      const url = createUrl("api/post-purchase/get-message");
+      const res = yield fetch(url);
+      const message = yield res.json();
+      return message;
     });
   }
+  extend("Checkout::PostPurchase::ShouldRender", (_0) => __async(void 0, [_0], function* ({ storage }) {
+    const message = yield getMessage();
+    yield storage.update({ message });
+    return { render: true };
+  }));
   render2("Checkout::PostPurchase::Render", App);
   function App({ extensionPoint, storage }) {
-    const initialState = storage.initialData;
-    return /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(BlockStack2, { spacing: "loose", children: [
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(CalloutBanner2, { title: "Post-purchase extension template", children: "Use this template as a starting point to build a great post-purchase extension." }),
-      /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
-        Layout2,
-        {
-          maxInlineSize: 0.95,
-          media: [
-            { viewportSize: "small", sizes: [1, 30, 1] },
-            { viewportSize: "medium", sizes: [300, 30, 0.5] },
-            { viewportSize: "large", sizes: [400, 30, 0.33] }
-          ],
-          children: [
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(View2, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Image2, { source: "https://cdn.shopify.com/static/images/examples/img-placeholder-1120x1120.png" }) }),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(View2, {}),
-            /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(BlockStack2, { spacing: "xloose", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(TextContainer2, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Heading2, { children: "Post-purchase extension" }),
-                /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TextBlock2, { children: "Here you can cross-sell other products, request a product review based on a previous purchase, and much more." })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(
-                Button2,
-                {
-                  submit: true,
-                  onPress: () => {
-                    console.log(`Extension point ${extensionPoint}`, initialState);
-                  },
-                  children: "Primary button"
-                }
-              )
-            ] })
-          ]
-        }
-      )
-    ] });
+    const Message = storage.initialData.message;
+    return /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlockStack2, { spacing: "loose", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(
+      Layout2,
+      {
+        maxInlineSize: 0.95,
+        media: [
+          { viewportSize: "small", sizes: [1, 30, 1] },
+          { viewportSize: "medium", sizes: [300, 30, 0.5] },
+          { viewportSize: "large", sizes: [400, 30, 0.33] }
+        ],
+        children: [
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(View2, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Image2, { source: "https://cdn.shopify.com/static/images/examples/img-placeholder-1120x1120.png" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(View2, {}),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlockStack2, { spacing: "xloose", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TextContainer2, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Heading2, { children: Message.message }) }) })
+        ]
+      }
+    ) });
   }
 })();

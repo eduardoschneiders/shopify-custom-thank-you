@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get "/api/products/count", to: "products#count"
   get "/api/products/create", to: "products#create"
 
+  get "/api/post-purchase/get-message", to: "post_purchases#get_message"
+
   # Any other routes will just render the react app
   match "*path" => "home#index", via: [:get, :post]
 end

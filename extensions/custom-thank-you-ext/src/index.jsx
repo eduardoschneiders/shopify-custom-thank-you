@@ -24,52 +24,34 @@ import {
   Text,
 } from "@shopify/post-purchase-ui-extensions-react";
 
-/**
- * Entry point for the `ShouldRender` Extension Point.
- *
- * Returns a value indicating whether or not to render a PostPurchase step, and
- * optionally allows data to be stored on the client for use in the `Render`
- * extension point.
- */
- extend("Checkout::PostPurchase::ShouldRender", async ({ storage }) => {
-  const initialState = await getRenderData();
-  const render = true;
 
-   if (render) {
-    await storage.update(initialState);
-  }
-
-  return {
-    render,
-  };
-});
-
-// Simulate results of network call, etc.
-async function getRenderData() {
-  return {
-      couldBe: "anything",
-  };
+function createUrl(endpoint) {
+  const embeddedAppHost = "https://e6b3-2804-4b0-1198-a900-8994-8510-805b-8302.ngrok.io";
+  return `${embeddedAppHost}/${endpoint}`;
 }
 
-/**
-* Entry point for the `Render` Extension Point
-*
-* Returns markup composed of remote UI components.  The Render extension can
-* optionally make use of data stored during `ShouldRender` extension point to
-* expedite time-to-first-meaningful-paint.
-*/
+async function getMessage() {
+  const url = createUrl("api/post-purchase/get-message");
+  const res = await fetch(url);
+  const message = await res.json();
+
+  return message;
+}
+
+extend("Checkout::PostPurchase::ShouldRender", async ({ storage }) => {
+   const message = await getMessage();
+   await storage.update({ message: message });
+
+   return { render: true };
+});
+
 render("Checkout::PostPurchase::Render", App);
 
-// Top-level React component
 export function App({ extensionPoint, storage }) {
-  const initialState = storage.initialData;
+  const Message = storage.initialData.message;
 
   return (
     <BlockStack spacing="loose">
-      <CalloutBanner title="Post-purchase extension template">
-        Use this template as a starting point to build a great post-purchase extension.
-      </CalloutBanner>
-
       <Layout
           maxInlineSize={0.95}
           media={[
@@ -84,21 +66,8 @@ export function App({ extensionPoint, storage }) {
         <View />
         <BlockStack spacing="xloose">
           <TextContainer>
-            <Heading>Post-purchase extension</Heading>
-            <TextBlock>
-              Here you can cross-sell other products, request a product review
-              based on a previous purchase, and much more.
-            </TextBlock>
+            <Heading>{Message.message}</Heading>
           </TextContainer>
-          <Button
-            submit
-            onPress={() => {
-              // eslint-disable-next-line no-console
-              console.log(`Extension point ${extensionPoint}`, initialState);
-            }}
-          >
-            Primary button
-          </Button>
         </BlockStack>
       </Layout>
     </BlockStack>
