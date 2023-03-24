@@ -6,13 +6,29 @@ import {
   Page,
   SkeletonBodyText,
 } from "@shopify/polaris";
+import { MessageIndex } from "../components";
 
 export default function HomePage() {
   const navigate = useNavigate();
 
   const isLoading = false;
   const isRefetching = false;
-  const Messages = [];
+  const Messages = [
+    {
+      id: 1,
+      message: 'foobar',
+      createdAt: "2022-06-13",
+    },
+    {
+      id: 2,
+      message: 'Biz',
+      createdAt: "2022-06-13",
+    }
+  ];
+
+  const messagesMarkup = Messages?.length ? (
+    <MessageIndex Messages={Messages} loading={isRefetching} />
+  ) : null;
 
   const loadingMarkup = isLoading ? (
     <Card sectioned>
@@ -40,7 +56,7 @@ export default function HomePage() {
     ) : null;
 
   return (
-    <Page>
+    <Page fullWidth={!!messagesMarkup}>
       <TitleBar
         title="Messages"
         primaryAction={{
@@ -51,6 +67,7 @@ export default function HomePage() {
       <Layout>
         <Layout.Section>
           {loadingMarkup}
+          {messagesMarkup}
           {emptyStateMarkup}
         </Layout.Section>
       </Layout>
