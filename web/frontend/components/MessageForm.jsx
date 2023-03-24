@@ -35,7 +35,32 @@ export function MessageForm({ Message: InitialMessage }) {
   const appBridge = useAppBridge();
   const fetch = useAuthenticatedFetch();
 
-  const onSubmit = (body) => console.log("submit", body);
+  const onSubmit = useCallback(
+    (body) => {
+      (async () => {
+        const MessageId = Message?.id;
+        const url = MessageId ? `/api/messages/${MessageId}` : "/api/messages";
+        const method = MessageId ? "PATCH" : "POST";
+        const response = await fetch(url, {
+          method,
+          body: JSON.stringify(body),
+          headers: { "Content-Type": "application/json" },
+        });
+        if (response.ok) {
+          makeClean();
+          const Message = await response.json();
+
+          if (!MessageId) {
+            navigate(`/messages/${Message.id}`);
+          } else {
+            setMessage(Message);
+          }
+        }
+      })();
+      return { status: "success" };
+    },
+    [Message, setMessage]
+  );
 
 
   const {
