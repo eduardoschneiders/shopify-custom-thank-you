@@ -7,24 +7,18 @@ import {
   SkeletonBodyText,
 } from "@shopify/polaris";
 import { MessageIndex } from "../components";
+import { useAppQuery } from "../hooks";
 
 export default function HomePage() {
   const navigate = useNavigate();
 
-  const isLoading = false;
-  const isRefetching = false;
-  const Messages = [
-    {
-      id: 1,
-      message: 'foobar',
-      createdAt: "2022-06-13",
-    },
-    {
-      id: 2,
-      message: 'Biz',
-      createdAt: "2022-06-13",
-    }
-  ];
+  const {
+    data: Messages,
+    isLoading,
+    isRefetching,
+  } = useAppQuery({
+    url: "/api/messages",
+  });
 
   const messagesMarkup = Messages?.length ? (
     <MessageIndex Messages={Messages} loading={isRefetching} />

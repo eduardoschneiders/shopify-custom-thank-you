@@ -3,6 +3,14 @@
 class MessagesController < AuthenticatedController
   before_action :find_message, only: [:show, :update, :delete]
 
+  def index
+    messages = Message.all.map do |message|
+      { id: message.id, message: message.message, createdAt: message.created_at }
+    end
+
+    render(json: messages)
+  end
+
   def show
     render(json: { id: @message.id, message: @message.message, createdAt: @message.created_at })
   end
