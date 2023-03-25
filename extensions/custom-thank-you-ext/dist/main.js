@@ -16549,7 +16549,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
   // extensions/custom-thank-you-ext/src/index.jsx
   var import_jsx_runtime4 = __toESM(require_jsx_runtime());
   function createUrl(endpoint) {
-    const embeddedAppHost = "https://e6b3-2804-4b0-1198-a900-8994-8510-805b-8302.ngrok.io";
+    const embeddedAppHost = "https://38f4-2804-4b0-1198-a900-8994-8510-805b-8302.ngrok.io";
     return `${embeddedAppHost}/${endpoint}`;
   }
   function getMessage() {

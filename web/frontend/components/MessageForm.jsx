@@ -7,6 +7,7 @@ import {
   TextField,
   Button,
   ChoiceList,
+  Checkbox,
   Select,
   Thumbnail,
   Icon,
@@ -14,6 +15,7 @@ import {
   TextStyle,
   Layout,
   EmptyState,
+  Image
 } from "@shopify/polaris";
 import {
   ContextualSaveBar,
@@ -31,6 +33,7 @@ import { useForm, useField, notEmptyString } from "@shopify/react-form";
 
 export function MessageForm({ Message: InitialMessage }) {
   const [Message, setMessage] = useState(InitialMessage);
+
   const navigate = useNavigate();
   const appBridge = useAppBridge();
   const fetch = useAuthenticatedFetch();
@@ -62,10 +65,21 @@ export function MessageForm({ Message: InitialMessage }) {
     [Message, setMessage]
   );
 
+  const [image_url_s, setImageUrl] = useState(Message?.image_url)
+
+  const onChangeImageUrl = useCallback(
+    (value) => {
+      console.log(value)
+      setImageUrl(value)
+    },
+    [],
+  )
 
   const {
     fields: {
       message,
+      secondary_message,
+      image_url
     },
     dirty,
     reset,
@@ -76,6 +90,11 @@ export function MessageForm({ Message: InitialMessage }) {
     fields: {
       message: useField({
         value: Message?.message || "",
+        validates: [notEmptyString("Please add a message")],
+      }),
+      secondary_message: useField(Message?.secondary_message || ""),
+      image_url: useField({
+        value: image_url_s,
         validates: [notEmptyString("Please add a message")],
       }),
     },
@@ -95,6 +114,11 @@ export function MessageForm({ Message: InitialMessage }) {
       navigate(`/`);
     }
   }, [Message]);
+
+
+
+
+
 
   return (
     <Stack vertical>
@@ -126,17 +150,33 @@ export function MessageForm({ Message: InitialMessage }) {
                   helpText="Create a beautiful message"
                   multiline={4}
                 />
+
+                <TextField
+                  {...secondary_message}
+                  label="Secondary message"
+                  labelHidden
+                  helpText="Secondary message"
+                />
+
+                <TextField
+                  {...image_url}
+                  label="Image url"
+                  labelHidden
+                  helpText="Image Url"
+                  onChange={onChangeImageUrl}
+                />
               </Card>
             </FormLayout>
           </Form>
         </Layout.Section>
         <Layout.Section secondary>
-          <Card sectioned title="Message">
+          <Card sectioned title="Image">
+            <Image source={image_url_s} fit="contain" width={'100%'} />
             {Message ? (
               <EmptyState imageContained={true} />
             ) : (
               <EmptyState>
-                <p>Your message will appear here after you save.</p>
+                  <p>Your image will appear here</p>
               </EmptyState>
             )}
           </Card>
