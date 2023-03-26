@@ -60,12 +60,13 @@ export function MessageIndex({ Messages, loading }) {
   };
 
   const rowMarkup = Messages.map(
-    ({ id, message, createdAt }, index) => {
+    ({ id, message, active, createdAt }, index) => {
       return (
         <IndexTable.Row
           id={id}
           key={id}
           position={index}
+          status={active ? 'success' : "subdued"}
           onClick={() => {
             navigate(`/messages/${id}`);
           }}
@@ -74,6 +75,10 @@ export function MessageIndex({ Messages, loading }) {
             <UnstyledLink data-primary-link url={`/messages/${id}`}>
               {truncate(message, 25)}
             </UnstyledLink>
+          </IndexTable.Cell>
+
+          <IndexTable.Cell>
+            {active ? 'active' : 'inactive'}
           </IndexTable.Cell>
           <IndexTable.Cell>
             {dayjs(createdAt).format("MMMM D, YYYY")}
@@ -93,6 +98,7 @@ export function MessageIndex({ Messages, loading }) {
           itemCount={Messages.length}
           headings={[
             { title: "Message" },
+            { title: "Active" },
             { title: "Date created" }
           ]}
           selectable={false}

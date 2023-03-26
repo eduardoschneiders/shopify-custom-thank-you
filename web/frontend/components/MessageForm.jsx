@@ -15,7 +15,9 @@ import {
   TextStyle,
   Layout,
   EmptyState,
-  Image
+  Image,
+  Columns,
+  Text
 } from "@shopify/polaris";
 import {
   ContextualSaveBar,
@@ -69,7 +71,6 @@ export function MessageForm({ Message: InitialMessage }) {
 
   const onChangeImageUrl = useCallback(
     (value) => {
-      console.log(value)
       setImageUrl(value)
     },
     [],
@@ -115,6 +116,19 @@ export function MessageForm({ Message: InitialMessage }) {
     }
   }, [Message]);
 
+  const [isActivating, setIsActivating] = useState(false);
+  const activateMessage = useCallback(async () => {
+    reset();
+    setIsActivating(true);
+    const response = await fetch(`/api/messages/${Message.id}/activate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    setIsActivating(false);
+    const message_response = await response.json();
+
+    setMessage(message_response)
+  }, [Message]);
 
 
 
@@ -181,17 +195,38 @@ export function MessageForm({ Message: InitialMessage }) {
             )}
           </Card>
         </Layout.Section>
+
         <Layout.Section>
-          {Message?.id && (
+          <Columns gap="4" columns={3}>
+            {Message?.id && (
+              <Button
+                outline
+                destructive
+                onClick={deleteMessage}
+                loading={isDeleting}
+              >
+                Delete message
+              </Button>
+            )}
+
+            {Message?.id && !Message.active && (
             <Button
-              outline
-              destructive
-              onClick={deleteMessage}
-              loading={isDeleting}
+              primary
+              onClick={activateMessage}
+              loading={isActivating}
+              Style="margin-left: 10px;"
             >
-              Delete message
+              Activate message
             </Button>
           )}
+
+            {Message?.id && Message.active && (
+              <Text as="p" color="success">
+                This is the current active message
+
+              </Text>
+            )}
+          </Columns>
         </Layout.Section>
       </Layout>
     </Stack>

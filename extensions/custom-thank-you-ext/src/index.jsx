@@ -26,7 +26,7 @@ import {
 
 
 function createUrl(endpoint) {
-  const embeddedAppHost = "https://38f4-2804-4b0-1198-a900-8994-8510-805b-8302.ngrok.io";
+  const embeddedAppHost = "https://a0a6-2804-4b0-1198-a900-a436-1dc9-cc19-d1a.ngrok.io";
   return `${embeddedAppHost}/${endpoint}`;
 }
 
