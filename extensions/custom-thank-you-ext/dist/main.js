@@ -16578,9 +16578,12 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
           { viewportSize: "large", sizes: [400, 30, 0.33] }
         ],
         children: [
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(View2, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Image2, { source: "https://cdn.shopify.com/static/images/examples/img-placeholder-1120x1120.png" }) }),
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(View2, { children: Message.image_url && /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Image2, { source: Message.image_url }) }),
           /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(View2, {}),
-          /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(BlockStack2, { spacing: "xloose", children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TextContainer2, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Heading2, { children: Message.message }) }) })
+          /* @__PURE__ */ (0, import_jsx_runtime4.jsxs)(BlockStack2, { spacing: "xloose", children: [
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TextContainer2, { children: /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(Heading2, { children: Message.message }) }),
+            /* @__PURE__ */ (0, import_jsx_runtime4.jsx)(TextContainer2, { children: Message.secondary_message && Message.secondary_message })
+          ] })
         ]
       }
     ) });

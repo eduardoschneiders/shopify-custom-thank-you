@@ -39,10 +39,10 @@ async function getMessage() {
 }
 
 extend("Checkout::PostPurchase::ShouldRender", async ({ storage }) => {
-   const message = await getMessage();
-   await storage.update({ message: message });
+  const message = await getMessage();
+  await storage.update({ message: message });
 
-   return { render: true };
+  return { render: true };
 });
 
 render("Checkout::PostPurchase::Render", App);
@@ -61,12 +61,17 @@ export function App({ extensionPoint, storage }) {
           ]}
       >
         <View>
-          <Image source="https://cdn.shopify.com/static/images/examples/img-placeholder-1120x1120.png" />
+          {Message.image_url && (<Image source={Message.image_url} />)}
+
         </View>
         <View />
         <BlockStack spacing="xloose">
           <TextContainer>
             <Heading>{Message.message}</Heading>
+          </TextContainer>
+
+          <TextContainer>
+            {Message.secondary_message && (Message.secondary_message)}
           </TextContainer>
         </BlockStack>
       </Layout>
