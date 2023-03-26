@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-class MessagesController < AuthenticatedController
-  before_action :find_message, only: [:show, :update, :delete]
+class Api::MessagesController < AuthenticatedController
+  before_action :find_message, only: [:show, :update, :delete, :activate]
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def index
@@ -41,7 +41,7 @@ class MessagesController < AuthenticatedController
       secondary_message: message.secondary_message,
       image_url: message.image_url,
       active: message.active,
-      createdAt: message.created_at
+      createdAt: message.created_at.to_s
     }
   end
 

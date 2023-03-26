@@ -11,11 +11,9 @@ Rails.application.routes.draw do
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  get "/api/messages", to: "messages#index"
-  get "/api/messages/:id", to: "messages#show"
-  patch "/api/messages/:id", to: "messages#update"
-  post "/api/messages", to: "messages#create"
-  delete "/api/messages/:id", to: "messages#delete"
+  namespace :api do
+    resources :messages
+  end
 
   get "/api/products/count", to: "products#count"
   get "/api/products/create", to: "products#create"
