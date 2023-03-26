@@ -12,7 +12,11 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   namespace :api do
-    resources :messages
+    resources :messages do
+      member do
+        post "activate", to: "messages#activate"
+      end
+    end
   end
 
   get "/api/products/count", to: "products#count"

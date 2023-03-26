@@ -32,6 +32,13 @@ class Api::MessagesController < AuthenticatedController
     @message.destroy
   end
 
+  def activate
+    Message.active.update(active: false)
+    @message.update(active: true)
+
+    render(json: response_object(@message))
+  end
+
   private
 
   def response_object(message)

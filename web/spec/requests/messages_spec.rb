@@ -21,7 +21,6 @@ RSpec.describe "Messages", type: :request do
         created_at: created_at,
         image_url: 'http://image.jpg',
         active: true,
-
       )
     end
 
@@ -65,7 +64,7 @@ RSpec.describe "Messages", type: :request do
 
     let(:created_at) { Time.zone.now - 1.year}
 
-    it 'lists the  messages' do
+    it 'lists the message' do
       get api_message_path(id: Message.first.id)
       expected_response ={
         id: Message.first.id,
@@ -94,7 +93,7 @@ RSpec.describe "Messages", type: :request do
 
     let(:created_at) { Time.zone.now - 1.year}
 
-    it 'lists the  messages' do
+    it 'updates the message' do
       patch api_message_path(id: Message.first.id, message: 'New Message')
       expected_response ={
         id: Message.first.id,
@@ -144,9 +143,57 @@ RSpec.describe "Messages", type: :request do
     end
 
 
-    it 'lists the  messages' do
+    it 'deletes a message' do
       delete api_message_path(id: Message.first.id)
       expect(Message.count).to eql(0)
+    end
+  end
+
+  describe "#activate" do
+    before do
+      first_message
+      second_message
+      third_message
+    end
+
+    let(:first_message) do
+      Message.create(
+        message: 'Some important message',
+        secondary_message: 'some secondary message',
+        created_at: created_at,
+        image_url: 'http://image.jpg',
+        active: false
+      )
+    end
+
+    let(:second_message) do
+      Message.create(
+        message: 'Other Message',
+        secondary_message: 'some secondary message',
+        created_at: created_at,
+        image_url: 'http://image.jpg',
+        active: true,
+      )
+    end
+
+    let(:third_message) do
+      Message.create(
+        message: 'Other Message',
+        secondary_message: 'some secondary message',
+        created_at: created_at,
+        image_url: 'http://image.jpg',
+        active: false,
+      )
+    end
+
+    let(:created_at) { Time.zone.now - 1.year}
+
+    it 'activates a message, and deactivate the others' do
+      post activate_api_message_path(id: Message.first.id)
+
+      expect(first_message.reload.active).to be_truthy
+      expect(second_message.reload.active).to be_falsey
+      expect(third_message.reload.active).to be_falsey
     end
   end
 end
