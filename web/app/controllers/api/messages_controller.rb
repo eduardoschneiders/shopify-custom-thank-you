@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Api::MessagesController < AuthenticatedController
-  before_action :find_message, only: [:show, :update, :delete, :activate]
+  before_action :find_message, only: [:show, :update, :destroy, :activate]
   skip_before_action :verify_authenticity_token, only: [:create]
 
   def index
@@ -28,7 +28,7 @@ class Api::MessagesController < AuthenticatedController
     render(json: response_object(message))
   end
 
-  def delete
+  def destroy
     @message.destroy
   end
 
