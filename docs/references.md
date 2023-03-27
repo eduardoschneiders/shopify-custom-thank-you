@@ -1,0 +1,7 @@
+- [How to Build a Shopify App: The Complete Guide](https://www.shopify.com/partners/blog/how-to-build-a-shopify-app)
+- [Getting started with post-purchase checkout extensions](https://shopify.dev/docs/apps/checkout/product-offers/post-purchase/getting-started)
+- [Placing a test order](https://help.shopify.com/en/manual/checkout-settings/test-orders)
+- [Checkout UI extensions](https://shopify.dev/docs/api/checkout-ui-extensions)
+- [Build an example app](https://shopify.dev/docs/apps/getting-started/build-app-example)
+- [Code review for a Ruby on Rails app for the Shopify App Store](https://www.youtube.com/watch?v=jy0jLrEWPqA)
+- [Build A Shopify App #1 - App Structure](https://www.youtube.com/watch?v=YoBW3CvELgI)
